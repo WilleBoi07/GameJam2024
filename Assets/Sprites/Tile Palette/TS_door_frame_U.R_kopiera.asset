@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: TS_door_frame_U.R_kopiera
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: c0300a5b4a219da40a2883eb2de4cc69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66860dde176c9ef439cf1b48fc0e6e97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
