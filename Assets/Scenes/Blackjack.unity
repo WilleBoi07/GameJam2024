@@ -885,6 +885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1100738913}
   - component: {fileID: 1100738912}
+  - component: {fileID: 1100738914}
   m_Layer: 0
   m_Name: Circle (1)
   m_TagString: Untagged
@@ -959,6 +960,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1100738914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100738911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17b0189ffa7f5f448f066f5fb3d0014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DealerCardtext: {fileID: 1170675222}
+  PlayerCardtext: {fileID: 22905980}
 --- !u!1 &1170675220
 GameObject:
   m_ObjectHideFlags: 0
