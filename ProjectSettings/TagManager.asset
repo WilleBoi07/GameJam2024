@@ -5,6 +5,28 @@ TagManager:
   serializedVersion: 2
   tags:
   - blackjack
+  - PHP1
+  - PHP2
+  - PHP3
+  - PHP4
+  - PHP5
+  - PHP6
+  - PHP7
+  - PHP8
+  - PHP9
+  - PHP10
+  - PHP11
+  - DHP1
+  - DHP2
+  - DHP3
+  - DHP4
+  - DHP5
+  - DHP6
+  - DHP7
+  - DHP8
+  - DHP9
+  - DHP10
+  - DHP11
   layers:
   - Default
   - TransparentFX
