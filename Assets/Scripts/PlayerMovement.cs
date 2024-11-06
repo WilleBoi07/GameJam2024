@@ -1,28 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
-    [SerializeField] int Money = 0;
-    int speed = 5;
-
+    [SerializeField] public int Money = 1000;
     [SerializeField] private TextMeshProUGUI CoinText;
+    private int speed = 5;
 
-
-    // Update is called once per frame
-    void Update()
+    // Method to update the player's money display
+    public void UpdateCoinText()
     {
         CoinText.text = "Credits: " + Money;
+    }
 
-        if(Input.GetKey(KeyCode.W))
+    void Update()
+    {
+        UpdateCoinText();
+
+        if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.up * speed *  Time.deltaTime);
+            transform.Translate(Vector3.up * speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -36,11 +35,5 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        int AddMoney = 20;
-        Money = Money + AddMoney;
     }
 }

@@ -12,6 +12,7 @@ public class BlackJackGame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI BetValuetext;
     [SerializeField] private TextMeshProUGUI DealerCardValuetext;
     [SerializeField] private TextMeshProUGUI PlayerCardValuetext;
+    [SerializeField] private BettingSystem BettingSystem;
 
     string[] Deck = { "AoSp", "1oSp", "2oSp", "3oSp", "4oSp", "5oSp", "6oSp", "7oSp", "8oSp", "9oSp", "10oSp", "JoSp", "QoSp", "KoSp", "AoH", "2oH", "3oH", "4oH", "5oH", "6oH", "7oH", "8oH", "9oH", "10oH", "JoH", "QoH", "KoH", "AoC", "2oC", "3oC", "4oC", "5oC", "6oC", "7oC", "8oC", "9oC", "10oC", "JoC", "QoC", "KoC", "AoD", "2oD", "3oD", "4oD", "5oD", "6oD", "7oD", "8oD", "9oD", "10oD", "JoD", "QoD", "KoD" };
     List<string> DeckList = new List<string>();
@@ -26,6 +27,16 @@ public class BlackJackGame : MonoBehaviour
     public Button Play;
     public Button Double;
     public Button Bet;
+    public Button Chip1;
+    public Button Chip5;
+    public Button Chip10;
+    public Button Chip25;
+    public Button Chip50;
+    public Button Chip100;
+    public Button Chip500;
+    public Button Chip1000;
+    public Button Chip5000;
+    public Button Chip10000;
 
     private void Start()
     {
@@ -37,6 +48,15 @@ public class BlackJackGame : MonoBehaviour
         Stand.interactable = false;
         Double.interactable = false;
         Bet.interactable = false;
+        Chip1.interactable = false;
+        Chip5.interactable = false;
+        Chip10.interactable = false;
+        Chip50.interactable = false;
+        Chip100.interactable = false;
+        Chip500.interactable = false;
+        Chip1000.interactable = false;
+        Chip5000.interactable = false;
+        Chip10000.interactable = false;
     }
 
     string DrawRandomCard()
@@ -105,7 +125,9 @@ public class BlackJackGame : MonoBehaviour
             Stand.interactable = false;
             Double.interactable = false;
             Bet.interactable = false;
+            Play.interactable = true;
             Debug.Log("Player Busts!");
+            BettingSystem.LoseBet();
         }
     }
 
@@ -121,21 +143,29 @@ public class BlackJackGame : MonoBehaviour
     public void PlayerDouble()
     {
         PlayerHit();
-        if (playerHandValue <= 21)
-        {
-            PlayerStand();
-        }
+        PlayerStand();
+        BettingSystem.DoubleBet();
     }
 
     public void PlayerPlay()
     {
         Bet.interactable = true;
+        Chip1.interactable = true;
+        Chip5.interactable = true;
+        Chip10.interactable = true;
+        Chip25.interactable = true;
+        Chip50.interactable = true;
+        Chip100.interactable = true;
+        Chip500.interactable = true;
+        Chip1000.interactable = true;
+        Chip5000.interactable = true;
+        Chip10000.interactable = true;
         Play.interactable = false;
     }
 
     public void PlayerBet()
     {
-        Debug.Log("Play Button pressed");
+        Debug.Log("Bet Button pressed");
 
         // Initial dealer and player cards
         string Dcard1 = DrawRandomCard();
@@ -180,6 +210,93 @@ public class BlackJackGame : MonoBehaviour
         if (dealerHandValue > 21)
         {
             Debug.Log("Dealer Busts!");
+            BettingSystem.LoseBet();
+            DeckList.Clear(); // Clear the current deck
+            DeckList.AddRange(Deck); // Populate with a standard deck
+
+            Play.interactable = true;
+            // Set initial button states
+            Hit.interactable = false;
+            Stand.interactable = false;
+            Double.interactable = false;
+            Bet.interactable = false;
+            Chip1.interactable = false;
+            Chip5.interactable = false;
+            Chip10.interactable = false;
+            Chip50.interactable = false;
+            Chip100.interactable = false;
+            Chip500.interactable = false;
+            Chip1000.interactable = false;
+            Chip5000.interactable = false;
+            Chip10000.interactable = false;
         }
-    }
+        else if (dealerHandValue == playerHandValue)
+        {
+            Debug.Log("Draw");
+            BettingSystem.DrawBet();
+            DeckList.Clear(); // Clear the current deck
+            DeckList.AddRange(Deck); // Populate with a standard deck
+
+            Play.interactable = true;
+            // Set initial button states
+            Hit.interactable = false;
+            Stand.interactable = false;
+            Double.interactable = false;
+            Bet.interactable = false;
+            Chip1.interactable = false;
+            Chip5.interactable = false;
+            Chip10.interactable = false;
+            Chip50.interactable = false;
+            Chip100.interactable = false;
+            Chip500.interactable = false;
+            Chip1000.interactable = false;
+            Chip5000.interactable = false;
+            Chip10000.interactable = false;
+        }
+        else if (dealerHandValue < playerHandValue && playerHandValue == 21)
+        {
+            Debug.Log("BlackJack!");
+            BettingSystem.WinBet();
+            DeckList.Clear(); // Clear the current deck
+            DeckList.AddRange(Deck); // Populate with a standard deck
+
+            Play.interactable = true;
+            // Set initial button states
+            Hit.interactable = false;
+            Stand.interactable = false;
+            Double.interactable = false;
+            Bet.interactable = false;
+            Chip1.interactable = false;
+            Chip5.interactable = false;
+            Chip10.interactable = false;
+            Chip50.interactable = false;
+            Chip100.interactable = false;
+            Chip500.interactable = false;
+            Chip1000.interactable = false;
+            Chip5000.interactable = false;
+            Chip10000.interactable = false;
+        }
+        else
+        {
+            BettingSystem.WinBet();
+            DeckList.Clear(); // Clear the current deck
+            DeckList.AddRange(Deck); // Populate with a standard deck
+
+            Play.interactable = true;
+            // Set initial button states
+            Hit.interactable = false;
+            Stand.interactable = false;
+            Double.interactable = false;
+            Bet.interactable = false;
+            Chip1.interactable = false;
+            Chip5.interactable = false;
+            Chip10.interactable = false;
+            Chip50.interactable = false;
+            Chip100.interactable = false;
+            Chip500.interactable = false;
+            Chip1000.interactable = false;
+            Chip5000.interactable = false;
+            Chip10000.interactable = false;
+        }
+    }       
 }
