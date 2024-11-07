@@ -11,6 +11,7 @@ public class BlackJackGame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI BetValuetext;
     [SerializeField] private TextMeshProUGUI DealerCardValuetext;
     [SerializeField] private TextMeshProUGUI PlayerCardValuetext;
+    [SerializeField] private TextMeshProUGUI GameResultText;
     [SerializeField] private BettingSystem BettingSystem;
 
     string[] Deck = { "AoSp", "2oSp", "3oSp", "4oSp", "5oSp", "6oSp", "7oSp", "8oSp", "9oSp", "10oSp", "JoSp", "QoSp", "KoSp", "AoH", "2oH", "3oH", "4oH", "5oH", "6oH", "7oH", "8oH", "9oH", "10oH", "JoH", "QoH", "KoH", "AoC", "2oC", "3oC", "4oC", "5oC", "6oC", "7oC", "8oC", "9oC", "10oC", "JoC", "QoC", "KoC", "AoD", "2oD", "3oD", "4oD", "5oD", "6oD", "7oD", "8oD", "9oD", "10oD", "JoD", "QoD", "KoD" };
@@ -56,19 +57,21 @@ public class BlackJackGame : MonoBehaviour
         cardSpritesList.AddRange(cardSprites);
 
         // Set initial button states
-        Hit.interactable = false;
-        Stand.interactable = false;
-        Double.interactable = false;
-        Bet.interactable = false;
-        Chip1.interactable = false;
-        Chip5.interactable = false;
-        Chip10.interactable = false;
-        Chip50.interactable = false;
-        Chip100.interactable = false;
-        Chip500.interactable = false;
-        Chip1000.interactable = false;
-        Chip5000.interactable = false;
-        Chip10000.interactable = false;
+        Hit.gameObject.SetActive(false);
+        Stand.gameObject.SetActive(false);
+        Double.gameObject.SetActive(false);
+        Bet.gameObject.SetActive(false);
+        Chip1.gameObject.SetActive(false);
+        Chip5.gameObject.SetActive(false);
+        Chip10.gameObject.SetActive(false);
+        Chip25.gameObject.SetActive(false);
+        Chip50.gameObject.SetActive(false);
+        Chip100.gameObject.SetActive(false);
+        Chip500.gameObject.SetActive(false);
+        Chip1000.gameObject.SetActive(false);
+        Chip5000.gameObject.SetActive(false);
+        Chip10000.gameObject.SetActive(false);
+        GameResultText.gameObject.SetActive(false);
     }
 
     string DrawRandomCard()
@@ -162,21 +165,22 @@ public class BlackJackGame : MonoBehaviour
         // Check if player is over 21
         if (playerHandValue > 21)
         {
-            Hit.interactable = false;
-            Stand.interactable = false;
-            Double.interactable = false;
-            Bet.interactable = false;
-            Play.interactable = true;
-            Debug.Log("Player Busts!");
+            Hit.gameObject.SetActive(false);
+            Stand.gameObject.SetActive(false);
+            Double.gameObject.SetActive(false);
+            Bet.gameObject.SetActive(false);
+            Play.gameObject.SetActive(true);
+            GameResultText.text = "Player busts";
+            GameResultText.gameObject.SetActive(true);
             BettingSystem.LoseBet();
         }
     }
 
     public void PlayerStand()
     {
-        Hit.interactable = false;
-        Stand.interactable = false;
-        Double.interactable = false;
+        Hit.gameObject.SetActive(false);
+        Stand.gameObject.SetActive(false);
+        Double.gameObject.SetActive(false);
 
         DealerTurn(); // Proceed with dealer's turn
     }
@@ -190,18 +194,19 @@ public class BlackJackGame : MonoBehaviour
 
     public void PlayerPlay()
     {
-        Bet.interactable = true;
-        Chip1.interactable = true;
-        Chip5.interactable = true;
-        Chip10.interactable = true;
-        Chip25.interactable = true;
-        Chip50.interactable = true;
-        Chip100.interactable = true;
-        Chip500.interactable = true;
-        Chip1000.interactable = true;
-        Chip5000.interactable = true;
-        Chip10000.interactable = true;
-        Play.interactable = false;
+        Bet.gameObject.SetActive(true);
+        Chip1.gameObject.SetActive(true);
+        Chip5.gameObject.SetActive(true);
+        Chip10.gameObject.SetActive(true);
+        Chip25.gameObject.SetActive(true);
+        Chip50.gameObject.SetActive(true);
+        Chip100.gameObject.SetActive(true);
+        Chip500.gameObject.SetActive(true);
+        Chip1000.gameObject.SetActive(true);
+        Chip5000.gameObject.SetActive(true);
+        Chip10000.gameObject.SetActive(true);
+        Play.gameObject.SetActive(false);
+        GameResultText.gameObject.SetActive(false);
 
         dealerHandValue = 0;
         playerHandValue = 0;
@@ -254,35 +259,36 @@ public class BlackJackGame : MonoBehaviour
 
         if (playerHandValue == 21)
         {
-            Debug.Log("Player has a Blackjack!");
             BettingSystem.BlackjackWin();
-            Play.interactable = true;
+            GameResultText.text = "BlackJack! you win: " + BettingSystem.currentBet * 2.5;
+            GameResultText.gameObject.SetActive(true);
+            Play.gameObject.SetActive(true);
             return;
         }
 
         // Set buttons for the turn
-        Hit.interactable = true;
-        Stand.interactable = true;
-        Double.interactable = true;
-        Bet.interactable = false;
+        Hit.gameObject.SetActive(true);
+        Stand.gameObject.SetActive(true);
+        Double.gameObject.SetActive(true);
+        Bet.gameObject.SetActive(false);       
+        Chip1.gameObject.SetActive(false);
+        Chip5.gameObject.SetActive(false);
+        Chip10.gameObject.SetActive(false);
+        Chip25.gameObject.SetActive(false);
+        Chip50.gameObject.SetActive(false);
+        Chip100.gameObject.SetActive(false);
+        Chip500.gameObject.SetActive(false);
+        Chip1000.gameObject.SetActive(false);
+        Chip5000.gameObject.SetActive(false);
+        Chip10000.gameObject.SetActive(false);
     }
 
     private void DealerTurn()
     {
-        Hit.interactable = false;
-        Stand.interactable = false;
-        Double.interactable = false;
-        Bet.interactable = false;
-        Chip1.interactable = false;
-        Chip5.interactable = false;
-        Chip10.interactable = false;
-        Chip25.interactable = false;
-        Chip50.interactable = false;
-        Chip100.interactable = false;
-        Chip500.interactable = false;
-        Chip1000.interactable = false;
-        Chip5000.interactable = false;
-        Chip10000.interactable = false;
+        Hit.gameObject.SetActive(false);
+        Stand.gameObject.SetActive(false);
+        Double.gameObject.SetActive(false);
+        Bet.gameObject.SetActive(false);
         // Continue drawing until dealer has at least 17
         while (dealerHandValue < 17)
         {
@@ -294,27 +300,30 @@ public class BlackJackGame : MonoBehaviour
 
             dealerHandValue = CalculateHandValue(dealerHand);
             DealerCardValuetext.text = "Value: " + dealerHandValue;
-            Play.interactable = true;
+            Play.gameObject.SetActive(true);
         }
 
         if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
         {
-            Debug.Log("Player Wins!");
+            GameResultText.text = "You win:" + BettingSystem.currentBet * 2;
+            GameResultText.gameObject.SetActive(true);
             BettingSystem.WinBet();
-            Play.interactable = true;
+            Play.gameObject.SetActive(true);
         }
         else if (playerHandValue == dealerHandValue)
         {
-            Debug.Log("Push (Draw)");
+            GameResultText.text = "Draw. Returned: " + BettingSystem.currentBet;
+            GameResultText.gameObject.SetActive(true);
             BettingSystem.DrawBet();
-            Play.interactable = true;
+            Play.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("Dealer Wins!");
+            GameResultText.text = "Dealer win";
+            GameResultText.gameObject.SetActive(true);
             BettingSystem.LoseBet();
-            Play.interactable = true;
+            Play.gameObject.SetActive(true);
         }
-        Play.interactable = true;
+        Play.gameObject.SetActive(true);
     }
 }

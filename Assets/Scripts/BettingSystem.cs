@@ -8,7 +8,7 @@ public class BettingSystem : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement; // Reference to PlayerMovement script
     [SerializeField] private TextMeshProUGUI betText; // Text field for displaying the current bet amount
 
-    private int currentBet = 0;
+    public int currentBet = 0;
 
     private void Start()
     {
