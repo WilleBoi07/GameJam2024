@@ -83,13 +83,14 @@ public class BlackJackGame : MonoBehaviour
     {
         
        CardToPoint card =  Instantiate(playedCardPrefab, FindObjectOfType<Canvas>().transform).GetComponent<CardToPoint>();
-       RectTransform cardTransfrom = card.GetComponent<RectTransform>();
+        createdCards.Add(card);
+        RectTransform cardTransfrom = card.GetComponent<RectTransform>();
         card.GetComponent<Image>().sprite = cardSpritesList[index];
         cardSpritesList.RemoveAt(index);
-        cardTransfrom.position = new Vector3(100, 100, 0);//Lägger kortet på start positionen.
+        cardTransfrom.position = new Vector3(980, 440, 0);//Lägger kortet på start positionen.
         card.target = target;
         card.shouldMove = true;
-        createdCards.Add(card);
+        
     }
 
     void RemoveAllCardsOnScreen()
@@ -147,6 +148,8 @@ public class BlackJackGame : MonoBehaviour
     public void PlayerHit()
     {
         string newCard = DrawRandomCard();
+        AddCardOnScreen(playerHandPositions[currentPlayerIndex]);
+        currentPlayerIndex++;
         playerHand.Add(newCard);
         PlayerCardtext.text += " " + newCard;
 

@@ -6,12 +6,12 @@ public class BJTrigger : MonoBehaviour
 {
 
     bool in_blackjack = false;
-    private void OnTriggerEnter2D(Collider Other)
+    private void OnTriggerEnter2D(Collider2D Other)
     {
         in_blackjack = true;
     }
 
-    private void OnTriggerExit2D(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         in_blackjack = false;
     }

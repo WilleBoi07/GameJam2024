@@ -20,7 +20,7 @@ public class BettingSystem : MonoBehaviour
     {
         if (amount <= playerMovement.Money) // Check if player has enough money
         {
-            currentBet = amount;
+            currentBet += amount;
             playerMovement.Money -= amount; // Deduct bet amount from player's money
             UpdateUI();
         }
