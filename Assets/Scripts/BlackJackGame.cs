@@ -102,6 +102,8 @@ public class BlackJackGame : MonoBehaviour
         createdCards.Clear();
         currentDealerIndex = 0;
         currentPlayerIndex = 0;
+        cardSpritesList.Clear();
+        cardSpritesList.AddRange(cardSprites);
     }
 
     int GetCardValue(string card)
@@ -209,6 +211,7 @@ public class BlackJackGame : MonoBehaviour
 
         DeckList.Clear(); // Clear the current deck
         DeckList.AddRange(Deck); // Populate with a standard deck
+
         playerHand.Clear();
         dealerHand.Clear();
         DealerCardtext.text = "Cards: ";
@@ -284,6 +287,8 @@ public class BlackJackGame : MonoBehaviour
         while (dealerHandValue < 17)
         {
             string newCard = DrawRandomCard();
+            AddCardOnScreen(dealerHandPositions[currentDealerIndex]);
+            currentDealerIndex++;
             dealerHand.Add(newCard);
             DealerCardtext.text += " " + newCard;
 
