@@ -24,6 +24,7 @@ public class BlackJackGame : MonoBehaviour
     [SerializeField] RectTransform[] dealerHandPositions;
     int currentPlayerIndex = 0;
     int currentDealerIndex = 0;
+    List<CardToPoint> createdCards = new List<CardToPoint>();
 
     private List<string> playerHand = new List<string>();
     private List<string> dealerHand = new List<string>();
@@ -88,6 +89,18 @@ public class BlackJackGame : MonoBehaviour
         cardTransfrom.position = new Vector3(100, 100, 0);//Lägger kortet på start positionen.
         card.target = target;
         card.shouldMove = true;
+        createdCards.Add(card);
+    }
+
+    void RemoveAllCardsOnScreen()
+    {
+        for (int i = 0; i < createdCards.Count; i++)
+        {
+            Destroy(createdCards[i].gameObject);
+        }
+        createdCards.Clear();
+        currentDealerIndex = 0;
+        currentPlayerIndex = 0;
     }
 
     int GetCardValue(string card)
@@ -197,6 +210,7 @@ public class BlackJackGame : MonoBehaviour
         dealerHand.Clear();
         DealerCardtext.text = "Cards: ";
         PlayerCardtext.text = "Cards: ";
+        RemoveAllCardsOnScreen();
         print("start new game");
     }
 

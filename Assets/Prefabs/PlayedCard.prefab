@@ -89,4 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 100
+  speed: 1750
+  shouldMove: 0
