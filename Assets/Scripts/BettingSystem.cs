@@ -20,7 +20,7 @@ public class BettingSystem : MonoBehaviour
     {
         if (amount <= playerMovement.Money) // Check if player has enough money
         {
-            currentBet = amount;
+            currentBet += amount;
             playerMovement.Money -= amount; // Deduct bet amount from player's money
             UpdateUI();
         }
@@ -30,7 +30,7 @@ public class BettingSystem : MonoBehaviour
         }
     }
 
-    // Method to handle winnings (e.g., double the bet for a win)
+    // Method to handle standard win (2x payout)
     public void WinBet()
     {
         playerMovement.Money += currentBet * 2; // Player wins double their bet
@@ -38,17 +38,25 @@ public class BettingSystem : MonoBehaviour
         UpdateUI();
     }
 
-    // Method for losing bet
+    // Method to handle a Blackjack win (1.5x payout)
+    public void BlackjackWin()
+    {
+        playerMovement.Money += (int)(currentBet * 2.5); // Player wins 1.5x their bet
+        currentBet = 0;
+        UpdateUI();
+    }
+
+    // Method for losing the bet
     public void LoseBet()
     {
         currentBet = 0; // Clear the current bet
         UpdateUI();
     }
 
-    // Method for drawing bet
+    // Method for drawing the bet (refund)
     public void DrawBet()
     {
-        playerMovement.Money += currentBet; // player gets their money back
+        playerMovement.Money += currentBet; // Player gets their money back
         currentBet = 0;
         UpdateUI();
     }
