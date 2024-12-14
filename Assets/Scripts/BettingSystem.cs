@@ -18,10 +18,10 @@ public class BettingSystem : MonoBehaviour
     // Method to place a bet
     public void PlaceBet(int amount)
     {
-        if (amount <= playerMovement.Money) // Check if player has enough money
+        if (amount <= PersistentData.Money) // Check if player has enough money
         {
             currentBet += amount;
-            playerMovement.Money -= amount; // Deduct bet amount from player's money
+            PersistentData.Money -= amount; // Deduct bet amount from player's money
             UpdateUI();
         }
         else
@@ -33,16 +33,14 @@ public class BettingSystem : MonoBehaviour
     // Method to handle standard win (2x payout)
     public void WinBet()
     {
-        playerMovement.Money += currentBet * 2; // Player wins double their bet
-        currentBet = 0;
+        PersistentData.Money += currentBet * 2; // Player wins double their bet
         UpdateUI();
     }
 
     // Method to handle a Blackjack win (1.5x payout)
     public void BlackjackWin()
     {
-        playerMovement.Money += (int)(currentBet * 2.5); // Player wins 1.5x their bet
-        currentBet = 0;
+        PersistentData.Money += (int)(currentBet * 2.5); // Player wins 1.5x their bet
         UpdateUI();
     }
 
@@ -50,24 +48,26 @@ public class BettingSystem : MonoBehaviour
     public void LoseBet()
     {
         currentBet = 0; // Clear the current bet
-        UpdateUI();
     }
 
     // Method for drawing the bet (refund)
     public void DrawBet()
     {
-        playerMovement.Money += currentBet; // Player gets their money back
-        currentBet = 0;
+        PersistentData.Money += currentBet; // Player gets their money back        
         UpdateUI();
     }
 
     // Optional: Double the current bet for a "Double" action
     public void DoubleBet()
     {
-        if (currentBet <= playerMovement.Money)
+        Debug.Log("Double pressed");
+        if (currentBet <= PersistentData.Money)
         {
-            playerMovement.Money -= currentBet; // Deduct the additional bet amount
-            currentBet *= 2;
+            Debug.Log("player has enough money for double");
+            PersistentData.Money -= currentBet; // Deduct the additional bet amount
+            Debug.Log("money has been deducted");
+            currentBet += currentBet;
+            Debug.Log("money has been doubled to " +  currentBet);
             UpdateUI();
         }
         else
@@ -77,7 +77,7 @@ public class BettingSystem : MonoBehaviour
     }
 
     // Update UI to display the bet and player money
-    private void UpdateUI()
+    public void UpdateUI()
     {
         betText.text = "Bet: $" + currentBet;
         playerMovement.UpdateCoinText(); // Call the method to update player's money display
@@ -87,5 +87,10 @@ public class BettingSystem : MonoBehaviour
     public int GetCurrentBet()
     {
         return currentBet;
+    }
+
+    public void ResetBet()
+    {
+        currentBet = 0;
     }
 }

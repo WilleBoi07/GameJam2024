@@ -5,14 +5,19 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] public int Money = 1000;
+   // public int Money = 1000;
     [SerializeField] private TextMeshProUGUI CoinText;
     private int speed = 5;
 
     // Method to update the player's money display
     public void UpdateCoinText()
     {
-        CoinText.text = "Credits: " + Money;
+        CoinText.text = "Credits: " + PersistentData.Money;
+    }
+
+    void Start()
+    {
+
     }
 
     void Update()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BlackJackGame : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class BlackJackGame : MonoBehaviour
     public Button Play;
     public Button Double;
     public Button Bet;
+    public Button Exit;
     public Button Chip1;
     public Button Chip5;
     public Button Chip10;
@@ -51,10 +53,12 @@ public class BlackJackGame : MonoBehaviour
 
     private void Start()
     {
+        print($"Persistent data test är {PersistentData.Money}");
         DeckList.Clear(); // Clear the current deck
         DeckList.AddRange(Deck); // Populate with a standard deck
         cardSpritesList.Clear();
         cardSpritesList.AddRange(cardSprites);
+
 
         // Set initial button states
         Hit.gameObject.SetActive(false);
@@ -84,8 +88,8 @@ public class BlackJackGame : MonoBehaviour
 
     void AddCardOnScreen(RectTransform target)
     {
-        
-       CardToPoint card =  Instantiate(playedCardPrefab, FindObjectOfType<Canvas>().transform).GetComponent<CardToPoint>();
+
+        CardToPoint card = Instantiate(playedCardPrefab, FindObjectOfType<Canvas>().transform).GetComponent<CardToPoint>();
         createdCards.Add(card);
         RectTransform cardTransfrom = card.GetComponent<RectTransform>();
         card.GetComponent<Image>().sprite = cardSpritesList[index];
@@ -93,7 +97,7 @@ public class BlackJackGame : MonoBehaviour
         cardTransfrom.position = new Vector3(980, 440, 0);//Lägger kortet på start positionen.
         card.target = target;
         card.shouldMove = true;
-        
+
     }
 
     void RemoveAllCardsOnScreen()
@@ -170,9 +174,11 @@ public class BlackJackGame : MonoBehaviour
             Double.gameObject.SetActive(false);
             Bet.gameObject.SetActive(false);
             Play.gameObject.SetActive(true);
+            Exit.gameObject.SetActive(true);
             GameResultText.text = "Player busts";
             GameResultText.gameObject.SetActive(true);
             BettingSystem.LoseBet();
+
         }
     }
 
@@ -187,9 +193,10 @@ public class BlackJackGame : MonoBehaviour
 
     public void PlayerDouble()
     {
+        BettingSystem.DoubleBet();
         PlayerHit();
         PlayerStand();
-        BettingSystem.DoubleBet();
+
     }
 
     public void PlayerPlay()
@@ -207,6 +214,10 @@ public class BlackJackGame : MonoBehaviour
         Chip10000.gameObject.SetActive(true);
         Play.gameObject.SetActive(false);
         GameResultText.gameObject.SetActive(false);
+        Exit.gameObject.SetActive(false);
+
+        BettingSystem.ResetBet();
+        BettingSystem.UpdateUI();
 
         dealerHandValue = 0;
         playerHandValue = 0;
@@ -223,6 +234,11 @@ public class BlackJackGame : MonoBehaviour
         PlayerCardtext.text = "Cards: ";
         RemoveAllCardsOnScreen();
         print("start new game");
+    }
+
+    public void PlayerExit()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void PlayerBet()
@@ -261,6 +277,7 @@ public class BlackJackGame : MonoBehaviour
         {
             BettingSystem.BlackjackWin();
             GameResultText.text = "BlackJack! you win: " + BettingSystem.currentBet * 2.5;
+
             GameResultText.gameObject.SetActive(true);
             Play.gameObject.SetActive(true);
             return;
@@ -300,7 +317,6 @@ public class BlackJackGame : MonoBehaviour
 
             dealerHandValue = CalculateHandValue(dealerHand);
             DealerCardValuetext.text = "Value: " + dealerHandValue;
-            Play.gameObject.SetActive(true);
         }
 
         if (dealerHandValue > 21 || playerHandValue > dealerHandValue)
@@ -308,22 +324,20 @@ public class BlackJackGame : MonoBehaviour
             GameResultText.text = "You win:" + BettingSystem.currentBet * 2;
             GameResultText.gameObject.SetActive(true);
             BettingSystem.WinBet();
-            Play.gameObject.SetActive(true);
         }
         else if (playerHandValue == dealerHandValue)
         {
             GameResultText.text = "Draw. Returned: " + BettingSystem.currentBet;
             GameResultText.gameObject.SetActive(true);
             BettingSystem.DrawBet();
-            Play.gameObject.SetActive(true);
         }
         else
         {
             GameResultText.text = "Dealer win";
             GameResultText.gameObject.SetActive(true);
             BettingSystem.LoseBet();
-            Play.gameObject.SetActive(true);
         }
         Play.gameObject.SetActive(true);
+        Exit.gameObject.SetActive(true);
     }
 }
